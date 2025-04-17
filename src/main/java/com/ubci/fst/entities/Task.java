@@ -2,16 +2,13 @@ package com.ubci.fst.entities;
  
  import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+ import com.fasterxml.jackson.annotation.JsonFormat;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
+ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -19,8 +16,7 @@ import jakarta.persistence.ManyToOne;
 
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-
+ 
 public class Task {
 
     @Id
@@ -30,6 +26,7 @@ public class Task {
     private String description;
     @Enumerated(EnumType.STRING)
     private Statut statut; // A_FAIRE, EN_COURS, TERMINEE
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateEcheance;
 
     

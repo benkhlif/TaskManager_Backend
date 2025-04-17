@@ -1,5 +1,6 @@
 package com.ubci.fst.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -17,36 +18,42 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIgnoreProperties({"password"}) 
-public class User {
+ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
     private String email;
-    @JsonIgnore
-    private String password;
+     private String password;
     @Enumerated(EnumType.STRING)
     private Role role; // EMPLOYE, MANAGER, ChefProjet
 
    //mrigla
     @JsonIgnore
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "chefProjet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Projet> projetsGeres;
 
     @JsonIgnore
     @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> taches; // Un employé peut avoir plusieurs tâches
 
-  
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<>();
     
-    
-    
-    // Constructeurs
+    public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	// Constructeurs
     public User() {}
 
     public User(String nom, String email, String password, Role role) {
@@ -55,10 +62,7 @@ public class User {
         this.password = password;
         this.role = role;
     }
-
-    
-    
-    
+  
     // Getters et Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -74,4 +78,6 @@ public class User {
     public void setProjetsGeres(List<Projet> projetsGeres) { this.projetsGeres = projetsGeres; }
     public List<Task> getTaches() { return taches; }
     public void setTaches(List<Task> taches) { this.taches = taches; }
+ 
+
  }

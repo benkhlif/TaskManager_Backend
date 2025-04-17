@@ -3,5 +3,5 @@ package com.ubci.fst.entities;
 public enum Role {
     EMPLOYE,
     MANAGER,
-    ChefProjet
+    ChefProjet, USER
 }
