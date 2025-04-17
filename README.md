@@ -1,4 +1,5 @@
-✨ Fonctionnalités
+✨ Fonctionnalités :
+
 🔐 Authentification et autorisation via JWT
 
 👥 Gestion des utilisateurs et de leurs rôles (Manager, Chef de projet, Employé)
